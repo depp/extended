@@ -7,11 +7,11 @@ package extended
 
 // An Extended is an 80-bit extended precision floating-point number.
 type Extended struct {
-	// The sign is stored as the high bit, the low 15 bits contain the exponent,
+	// The sign is stored as the high bit. The low 15 bits contain the exponent,
 	// with a bias of 16383.
 	SignExponent uint16
 
-	// The fraction includes a ones place as the high bit. The valiue in the
-	// ones place may be zero.
+	// The fraction includes a ones place as the high bit. The value in the ones
+	// place may be zero.
 	Fraction uint64
 }

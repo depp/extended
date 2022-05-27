@@ -2,11 +2,9 @@ package extended
 
 import "encoding/binary"
 
-const (
-	// ByteSize is the size, in bytes, of the binary representation of an
-	// extended-precision float.
-	ByteSize = 10
-)
+// ByteSize is the size, in bytes, of the binary representation of an
+// extended-precision float.
+const ByteSize = 10
 
 // PutBytesBigEndian serializes the value as a big-endian binary value and
 // writes it to a byte array. The binary representation takes 10 bytes.

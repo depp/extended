@@ -8,7 +8,8 @@ import (
 // ErrIsNaN indicates that the value is NaN and cannot be converted.
 var ErrIsNaN = errors.New("value is NaN")
 
-// BigFloat converts the number to an arbitrary-precision float.
+// BigFloat converts the number to an arbitrary-precision float. Returns
+// ErrIsNaN if the value is NaN, because NaN cannot be represented by big.Float.
 func (e Extended) BigFloat() (*big.Float, error) {
 	signbit := e.SignExponent&0x8000 != 0
 	exponent := int(e.SignExponent) & 0x7fff
