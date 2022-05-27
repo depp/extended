@@ -1,6 +1,8 @@
 package extended
 
 import (
+	"bytes"
+	"encoding/binary"
 	"math"
 	"strconv"
 	"testing"
@@ -106,5 +108,55 @@ func TestToFloat64(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+func TestSerialize(t *testing.T) {
+	var (
+		e  = Extended{0x1234, 0x1122334455667788}
+		be = []byte{0x12, 0x34, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88}
+		le = []byte{0x88, 0x77, 0x66, 0x55, 0x44, 0x33, 0x22, 0x11, 0x34, 0x12}
+	)
+
+	if out := FromBytesBigEndian(be); out != e {
+		t.Errorf("FromBytesBigEndian = %v, expect %v", out, e)
+	}
+	if out := FromBytes(binary.BigEndian, be); out != e {
+		t.Errorf("FromBytes(BigEndian) = %v, expect %v", out, e)
+	}
+	if out := FromBytesLittleEndian(le); out != e {
+		t.Errorf("FromBytesLittleEndian = %v, expect %v", out, e)
+	}
+	if out := FromBytes(binary.LittleEndian, le); out != e {
+		t.Errorf("FromBytes(LittleEndian) = %v, expect %v", out, e)
+	}
+
+	{
+		var b [10]byte
+		e.PutBytesBigEndian(b[:])
+		if !bytes.Equal(b[:], be) {
+			t.Errorf("PutBytesBigEndian = %v, expect %v", b[:], be)
+		}
+	}
+	{
+		var b [10]byte
+		e.PutBytesLittleEndian(b[:])
+		if !bytes.Equal(b[:], le) {
+			t.Errorf("PutBytesLittleEndian = %v, expect %v", b[:], le)
+		}
+	}
+	{
+		var b [10]byte
+		e.PutBytes(binary.BigEndian, b[:])
+		if !bytes.Equal(b[:], be) {
+			t.Errorf("PutBytes(BigEndian) = %v, expect %v", b[:], be)
+		}
+	}
+	{
+		var b [10]byte
+		e.PutBytes(binary.LittleEndian, b[:])
+		if !bytes.Equal(b[:], le) {
+			t.Errorf("PutBytes(LittleEndian) = %v, expect %v", b[:], le)
+		}
 	}
 }

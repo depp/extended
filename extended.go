@@ -1,8 +1,8 @@
 // Package extended provides conversions to and from 80-bit "extended"
-// floating-point numbers.
+// floating-point numbers (float80).
 //
 // Note that while NaNs are handled by this package, the distinction between
-// quiet NaN and signaling NaN is not preserved.
+// quiet NaN and signaling NaN is not preserved during conversions.
 package extended
 
 import (
