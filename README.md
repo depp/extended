@@ -4,7 +4,7 @@ This is a Go library that provides a type for representing 80-bit extended-preci
 
 ## Example
 
-```
+```go
 package main
 
 import (
