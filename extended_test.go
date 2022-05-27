@@ -106,6 +106,16 @@ func TestToFloat64(t *testing.T) {
 						strconv.FormatFloat(expect, 'g', -1, 64))
 					t.Logf("bits: %016x %016x", math.Float64bits(out), math.Float64bits(expect))
 				}
+				if big, err := in.BigFloat(); err == nil {
+					out2, _ := big.Float64()
+					if !equal(out2, out) {
+						t.Errorf("%04x:%016x.BigFloat().Float64() = %s, expect %s",
+							in.SignExponent, in.Fraction,
+							strconv.FormatFloat(out2, 'g', -1, 64),
+							strconv.FormatFloat(out, 'g', -1, 64))
+						t.Logf("bits: %016x %016x", math.Float64bits(out), math.Float64bits(expect))
+					}
+				}
 			}
 		})
 	}
